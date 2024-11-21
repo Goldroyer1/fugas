@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control y Monitoreo de Caudales</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    iframe {
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    .container {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Control y Monitoreo de Caudales</h1>
+
+  <!-- ESP32 #1 -->
+  <div class="container">
+    <h2>ESP32 #1</h2>
+    <h3>Caudal</h3>
+    <iframe width="450" height="260" style="border: 1px solid #cccccc;" 
+            src="https://thingspeak.com/channels/2753974/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line">
+    </iframe>
+    <h3>Control de Relé</h3>
+    <button onclick="controlRelay('https://api.thingspeak.com/update?api_key=BF67WC3Y2CCQEIHC&field2=1')">Encender Relé</button>
+    <button onclick="controlRelay('https://api.thingspeak.com/update?api_key=BF67WC3Y2CCQEIHC&field2=0')">Apagar Relé</button>
+  </div>
+
+  <!-- ESP32 #2 -->
+  <div class="container">
+    <h2>ESP32 #2</h2>
+    <h3>Caudal</h3>
+    <iframe width="450" height="260" style="border: 1px solid #cccccc;" 
+            src="https://thingspeak.com/channels/2753974/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line">
+    </iframe>
+    <h3>Control de Relé</h3>
+    <button onclick="controlRelay('https://api.thingspeak.com/update?api_key=BF67WC3Y2CCQEIHC&field4=1')">Encender Relé</button>
+    <button onclick="controlRelay('https://api.thingspeak.com/update?api_key=BF67WC3Y2CCQEIHC&field4=0')">Apagar Relé</button>
+  </div>
+
+  <script>
+    function controlRelay(url) {
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            alert("Comando enviado con éxito.");
+          } else {
+            alert("Error al enviar el comando.");
+          }
+        })
+        .catch(error => {
+          alert("Error de red: " + error.message);
+        });
+    }
+  </script>
+</body>
+</html>
